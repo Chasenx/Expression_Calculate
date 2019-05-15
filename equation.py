@@ -13,5 +13,4 @@ def equationTrans(equa) :
 
 if __name__ == '__main__':
     expr = "2a + 10 = 10*a + 4.2"
-    print(expr.replace(" ", ""))
     print(equationTrans(expr))
