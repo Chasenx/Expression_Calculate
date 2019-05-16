@@ -2,6 +2,7 @@
 import re
 
 #求解一元一次方程的主函数
+#求解方程，目前不包括分式的计算
 def solve(eq, var='x'):
     eq = re.sub(r'([\d\.]+)([xy])', r'\1*\2', eq)
     try:

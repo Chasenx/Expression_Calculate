@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import re
+from suffixExpr import suffixExpr2Tree
 
 class Stack(object):
     # 初始化栈为空列表
@@ -123,9 +124,13 @@ def calculate(str0):
     return result
 
 # 测试代码
+if __name__ == '__main__':
+    str0 = '3.14+(6-3.2)*(40+12)'
+    strtest = '17.8+3.6-((3)/(10))*((7)/(3))'
+    str1 = str2list(strtest)
+    str2 = InfixToPostfi(str1)
+    root = suffixExpr2Tree(str2)
 
-str0 = '3.14+(6-3.2)*(40+12)'
-strtest = '17.8+3.6-((3)/(10))*((7)/(3))'
-
-print(strtest)
-print(calculate(strtest))
+    print(strtest)
+    print(calculate(str0))
+    print(root.left.right.val)
