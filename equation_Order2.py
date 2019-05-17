@@ -9,7 +9,7 @@ def equation_Order2(str0):
     return s
 
 if __name__ == '__main__':
-    expr = '\frac { 2 7 x - 1 } { 1 4 } = 1 5 x + 6'
+    expr = '\frac { 1 5 - x } { 4 } - \frac { 1 4 + x } { 2 } = 0'
     print(expr)
     print(equation_Order2(expr))
 

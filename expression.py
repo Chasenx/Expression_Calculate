@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import re
 from suffixExpr import suffixExpr2Tree
+from quadEquation import trans
 
 class Stack(object):
     # 初始化栈为空列表
@@ -30,19 +31,22 @@ class Stack(object):
 def priority(element):
     numbers = {
         ')':0,
-        '+':1,
-        '-':1,
-        '*':2,
-        '/':2,
-        '(':3
+        '=':1,
+        '+':2,
+        '-':2,
+        '*':3,
+        '/':3,
+        '^':4,
+        '(':5
     }
     return numbers.get(element,None)
 
 #计算后缀表达式的函数，输入一个后缀表达式的list
 def postfixExpression(postlist):
     mystack = Stack()
+    operator = ['+','-','*','/','^']
     for tempstr in postlist:
-        if (tempstr == '+' or tempstr == '-' or tempstr == '*' or tempstr == '/'):
+        if tempstr in operator:
             secondnum = mystack.peek()
             mystack.pop()
             firstnum = mystack.peek()
@@ -60,6 +64,9 @@ def postfixExpression(postlist):
             if (tempstr == '/'):
                 sum = firstnum / secondnum
                 mystack.push(sum)
+            if (tempstr == '^'):
+                sum = pow(firstnum,secondnum)
+                mystack.push(sum)
         else:
             num = float(tempstr)
             mystack.push(num)
@@ -68,7 +75,7 @@ def postfixExpression(postlist):
 
 #中缀表达式转后缀表达式
 def InfixToPostfi(strlist):
-    operatorstr = ['+','-','*','/','(',')']
+    operatorstr = ['+','-','*','/','(',')','=','^']
     PostfiOutvec = []
     operatorstack = Stack()
     for element in strlist:
@@ -101,7 +108,7 @@ def InfixToPostfi(strlist):
 
 #字符串转list
 def str2list(str0):
-    pattern = re.compile(r'[+|\-|*|/|(|)]')
+    pattern = re.compile(r'[+|\-|*|/|(|)|=|^]')
     strlist = [m.start() for m in pattern.finditer(str0)]
     
     a = -1
@@ -118,19 +125,25 @@ def str2list(str0):
 
 #字符串计算函数
 def calculate(str0):
-    str1 = str2list(str0)
-    str2 = InfixToPostfi(str1)
-    result = postfixExpression(str2)
+    str1 = trans(str0,flag=1)
+    # print(str0)
+    str2 = str2list(str1)    # 后面记得改一下str0
+    # print(str2)
+    str3 = InfixToPostfi(str2)
+    # print(str3)
+    result = postfixExpression(str3)
     return result
 
 # 测试代码
 if __name__ == '__main__':
-    str0 = '3.14+(6-3.2)*(40+12)'
-    strtest = '17.8+3.6-((3)/(10))*((7)/(3))'
-    str1 = str2list(strtest)
-    str2 = InfixToPostfi(str1)
-    root = suffixExpr2Tree(str2)
-
+ 
+    strtest = '5  ^ { 3 } - \frac { 2^{4}+2 } { 5 }'
+    
     print(strtest)
-    print(calculate(str0))
-    print(root.left.right.val)
+    print(calculate(strtest))
+    # print(pow(2,1.2))
+
+    # str1 = str2list(strtest)
+    # print(str1)
+    # str2 = InfixToPostfi(strlist)
+    # print(str2)

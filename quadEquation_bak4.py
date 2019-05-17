@@ -1,11 +1,7 @@
 import re
-def trans(equa, flag=0):
+def trans(equa):
     equa = equa.replace(" ","").replace("\times", "*").replace("\div", "/")
-    if flag == 0:
-        equa = re.sub("\^{([0-9]*?)}", replIndex0, equa)
-    else :
-        equa = re.sub("\^{([0-9]*?)}", replIndex1, equa)
-    
+    equa = re.sub("\^{([0-9]*?)}", replIndex, equa)
     equa = re.sub("\x0crac{(.*?)}{(.*?)}", replMod, equa)
     nEqua = ''
     symbol = ['+','-','*','/','=','(',')']
@@ -26,14 +22,9 @@ def replEquel(matched):
     newVal = "-(" + matched.group(1) + ")"
     return newVal
 
-def replIndex0(matched):
+def replIndex(matched):
     newVal = "**" + matched.group(1)
     return newVal
-
-def replIndex1(matched):
-    newVal = "^" + matched.group(1)
-    return newVal
-
 
 def replMod(matched):
     newVal = "((" + matched.group(1) + ")" + "/" + "(" + matched.group(2) + "))"
@@ -44,6 +35,10 @@ def replPare(matched):
     return newVal
 
 if __name__ == '__main__':
-    expr = "\frac { 1 7 x + 4 } { 7 x ^ { 3 } }"
-    print(trans(expr,1))
+    expr = "\frac { 1 7 x + 4 } { 7 x ^ { 10 } }"
+    print(trans(expr))
+
+# def trans(equa, flag=0):
+#     flag=0 的时候 x^{数字} 转化为 x**数字
+#     flag=1 的时候 x^{数字} 转化为 x^数字
 

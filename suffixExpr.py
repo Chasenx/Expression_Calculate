@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import re
 
 class Stack(object):
     # 初始化栈为空列表
@@ -34,10 +35,10 @@ class Node(object):
 
 def suffixExpr2Tree(expr):
     stack = Stack()
-    symbol = ['+','-','*','/']
+    # symbol = ['+','-','*','/']
     root = None
     for i in expr:
-        if i in symbol:
+        if re.match(r'^[\+|\-|\*|/|=|\^]',i):
             cur = Node(i)
             right = stack.pop()
             if isinstance(right, Node):
@@ -56,11 +57,17 @@ def suffixExpr2Tree(expr):
     return root
 
 if __name__ == '__main__':
-    expr = ['3.4', '2', '4.6', '3', '-', '*', '+', '4', '2.3', '-', '+']
+    expr = ['3.4', '2', '4.6', '3', '-', '^', '+', '4', '2.3', '-', '+']
     root = suffixExpr2Tree(expr)
     print(root.val)
     print(root.left.val)
     print(root.right.val)
+    print(root.left.right.right.right.val)
+    print(root.left.right.val)
+    print(root.right.val)
     print(root.left.left.val)
     print(root.right.right.val)
+
+    if re.match(r'^[\+|\-|\*|/]','/     '):
+        print('yes')
     
