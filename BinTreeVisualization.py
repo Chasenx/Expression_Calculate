@@ -5,7 +5,19 @@ import matplotlib.pyplot as plt
 from expression import str2list,InfixToPostfi
 from quadEquation import trans
 from suffixExpr import suffixExpr2Tree
-from statistics import statistics
+# from statistics import statistics
+
+def statistics(expr):
+    dic = {}
+    for i in range(len(expr)):
+        if expr[i] in dic:
+            temp = expr[i]
+            for j in range(dic[expr[i]]):
+                expr[i] += " "
+            dic[temp] += 1
+        else:
+            dic[expr[i]] = 1
+    return expr
 
 def create_graph(G, node, pos={}, x=0, y=0, layer=1):
     pos[node.val] = (x, y)

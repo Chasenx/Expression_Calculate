@@ -2,6 +2,7 @@
 import re
 from suffixExpr import suffixExpr2Tree
 from quadEquation import trans
+from sympy import N
 
 class Stack(object):
     # 初始化栈为空列表
@@ -134,16 +135,17 @@ def calculate(str0):
     result = postfixExpression(str3)
     return result
 
+def calculate1(str0):
+    str0 = trans(str0)
+    result = N(str0)
+    result = result.evalf()
+    return result
+
 # 测试代码
 if __name__ == '__main__':
  
-    strtest = '5  ^ { 3 } - \frac { 2^{4}+2 } { 5 }'
+    strtest = r'sin(10)+cos(50)+30*lg(10)-arctan(100)'
     
     print(strtest)
-    print(calculate(strtest))
-    # print(pow(2,1.2))
-
-    # str1 = str2list(strtest)
-    # print(str1)
-    # str2 = InfixToPostfi(strlist)
-    # print(str2)
+    print(str2list(strtest))
+    # 测试str2list函数
